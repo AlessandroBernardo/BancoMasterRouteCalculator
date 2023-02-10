@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Domain.Interfaces
 {
-    public interface IBaseService<TEntity> where TEntity : BaseEntity
+    public interface IBaseService<TEntity> where TEntity : class
     {
         TEntity Add<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>;
 

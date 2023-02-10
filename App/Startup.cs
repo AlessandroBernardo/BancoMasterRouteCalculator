@@ -1,3 +1,4 @@
+using App.AutoMapper;
 using Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace App
 {
@@ -20,7 +22,12 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SqlContext>(options => options.UseSqlServer("ConnectionString"));            
+            services.AddDbContext<SqlContext>(options => options.UseSqlServer("ConnectionDefault"));
+            services.AddAutoMapper(typeof(AutoMapperSetup));
+            services.AddSwaggerGen(x =>
+           {
+               x.SwaggerDoc("v1", new OpenApiInfo { Title = "Banco Master Teste Calcular melhor rota", Version = "V1" });
+           });
             services.AddRazorPages();
         }
 
@@ -37,6 +44,11 @@ namespace App
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwaggerUI(x =>
+            { 
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Calcular melhor rota V1");
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

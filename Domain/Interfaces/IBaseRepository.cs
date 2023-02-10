@@ -14,5 +14,6 @@ namespace Domain.Interfaces
         IList<TEntity> Select();
 
         TEntity Select(int id);
+      
     }
 }
