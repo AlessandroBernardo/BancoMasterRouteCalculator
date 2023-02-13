@@ -20,6 +20,8 @@ namespace Domain.Enum
         LAX,
         FRA,
         AMS,
-        IST
+        IST,
+        BR,
+        BRSP
     }
 }

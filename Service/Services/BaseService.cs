@@ -1,20 +1,20 @@
 ﻿using Domain.Entities;
+using Domain.Entities.DTOResults;
 using Domain.Interfaces;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Service.Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : BaseEntity 
     {
-        private readonly IBaseRepository<TEntity> _baseRepository;
-       
+        private readonly IBaseRepository<TEntity> _baseRepository;        
+
         public BaseService(IBaseRepository<TEntity> baseRepository)
         {
-            _baseRepository = baseRepository;
-        }
+            _baseRepository = baseRepository;                        
+        }  
 
         private void Validate(TEntity obj, AbstractValidator<TEntity> validator)
         {
@@ -26,22 +26,32 @@ namespace Service.Services
 
         public TEntity Add<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>
         {
-            Validate(obj, Activator.CreateInstance<TValidator>());
-            _baseRepository.Insert(obj);
-            return obj;
+            try
+            {
+                Validate(obj, Activator.CreateInstance<TValidator>());
+                _baseRepository.Insert(obj);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);                   
+            }          
+        
         }
 
-        public void Delete(int id) => _baseRepository.Delete(id);
+        public void Delete(Guid id) => _baseRepository.Delete(id);
 
         public IList<TEntity> Get() => _baseRepository.Select();
 
-        public TEntity GetById(int id) => _baseRepository.Select(id);
+        public TEntity GetById(Guid id) => _baseRepository.Select(id);
 
         public TEntity Update<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>
         {
             Validate(obj, Activator.CreateInstance<TValidator>());
             _baseRepository.Update(obj);
             return obj;
-        }
+        }    
+
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Entities.DTOResults;
 using FluentValidation;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Interfaces
@@ -8,11 +10,11 @@ namespace Domain.Interfaces
     {
         TEntity Add<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>;
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         IList<TEntity> Get();
 
-        TEntity GetById(int id);
+        TEntity GetById(Guid id);
 
         TEntity Update<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>;
     }

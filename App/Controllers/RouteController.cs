@@ -2,13 +2,12 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Validators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Controllers
 {
@@ -17,15 +16,48 @@ namespace App.Controllers
     public class RouteController : ControllerBase
     {
 
-        private IBaseService<Route> _baseRouteService;
-        private readonly IMapper _mapper;
-
-        public RouteController(IBaseService<Route> baseRouteService, IMapper mapper)
+        private readonly IBaseService<Route> _baseRouteService;
+        private readonly IRouteService _routeService;
+        private readonly IMapper _mapper;        
+        private readonly ICustomRoutesValidators _customRoutesValidators;
+        public RouteController(IBaseService<Route> baseRouteService, IMapper mapper, IRouteService routeService, ICustomRoutesValidators customRoutesValidators)
         {
+            //acesso as interfaces genéricas
             _baseRouteService = baseRouteService;
+            // acesso as interfaces específicas
+            _routeService = routeService;
             _mapper = mapper;
+            _customRoutesValidators = customRoutesValidators;
+            
         }
 
+        /// <summary>
+        /// Endpoint que tem que como função trazer a rota de menor valor entre dois pontos.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("{origin}/{destination}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult CheckCheapestRoute(string origin, string destination)
+        {
+            try
+            {
+                var listDto = _routeService.CheckCheapestRoute(origin, destination);
+                return Ok(_mapper.Map<IList<RankedRouteModel>>(listDto));                
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -33,16 +65,21 @@ namespace App.Controllers
         {
             try
             {
-                var route = _mapper.Map<Route>(routeModel);
+                var route = _mapper.Map<Route>(routeModel);              
+                if (_customRoutesValidators.RouteExists(route))
+                {
+                    return BadRequest("Essa rota já existe");
+                }                               
                 return Ok(_baseRouteService.Add<RouteValidator>(route));
             }
             catch (Exception ex)
             {
-                throw ex;
+                return BadRequest(ex.Message);
             }
-            
-        }
 
+        } 
+        
+        [AllowAnonymous]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,12 +97,13 @@ namespace App.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             try
             {
-                if (id == 0)
+                if (id == Guid.Empty)
                     return NotFound();
                 _baseRouteService.Delete(id);
                 return new NoContentResult();
@@ -75,10 +113,11 @@ namespace App.Controllers
 
                 throw ex;
             }
-          
-                       
+
+
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -94,14 +133,16 @@ namespace App.Controllers
 
                 throw ex;
             }
-            
-            
+
+
         }
 
+        [AllowAnonymous]
         [HttpGet]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             try
             {
@@ -117,7 +158,6 @@ namespace App.Controllers
 
         }
 
-    }
-
+    } 
 
 }

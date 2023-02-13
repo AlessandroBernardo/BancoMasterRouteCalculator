@@ -7,8 +7,21 @@ namespace App.Models
 {
     public class RouteModel : BaseModel
     {
-        public string Origin { get; set; }
-        public string Destination { get; set; }
-        public decimal Value { get; set; }
+        private string _origin;
+        private string _destination;
+
+        public string Origin
+        {
+            get { return _origin; }
+            set { _origin = value.ToUpper(); }
+        }
+
+        public string Destination
+        {
+            get { return _destination; }
+            set { _destination = value.ToUpper(); }
+        }
+
+        public decimal Price { get; set; }
     }
 }

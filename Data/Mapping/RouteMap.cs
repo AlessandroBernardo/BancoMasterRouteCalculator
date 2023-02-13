@@ -17,50 +17,69 @@ namespace Data.Mapping
                    .HasColumnName("Origin")
                    .HasColumnType("varchar(3)");
 
+
+            builder.Property(x => x.Destination)
+                   .IsRequired()
+                   .HasColumnName("Destination")
+                   .HasColumnType("varchar(3)");
+
+
+            builder.Property(x => x.Price)
+                   .IsRequired()
+                   .HasColumnName("Price")
+                   .HasColumnType("decimal(18,2)");
+
             builder.HasData(
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "GRU",
                     Destination = "BRC",
-                    Value = 10
+                    Price = 10
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "BRC",
                     Destination = "SCL",
-                    Value = 5
+                    Price = 5
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "GRU",
                     Destination = "CDG",
-                    Value = 75
+                    Price = 75
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "GRU",
                     Destination = "SCL",
-                    Value = 20
+                    Price = 20
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "GRU",
                     Destination = "ORL",
-                    Value = 56
+                    Price = 56
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "ORL",
                     Destination = "CDG",
-                    Value = 5
+                    Price = 5
                 },
                 new Route
                 {
+                    Id = Guid.NewGuid(),
                     Origin = "SCL",
                     Destination = "ORL",
-                    Value = 20
+                    Price = 20
                 }
-           );
+           ); ;
         }
     }
 }

@@ -1,18 +1,48 @@
 ﻿using Data.Context;
+using Data.Repository.Querys.RouteQuerys;
 using Domain.Entities;
+using Domain.Entities.DTOResults;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Data.Repository
 {
-    public class RouteRepository : BaseRepository<Route>
+    public class RouteRepository : IRouteRepository
     {
-        public RouteRepository(SqlContext context) : base(context)
-        {
 
+        protected readonly SqlContext _sqlContext;
+        protected readonly ICustomRoutesValidators _customRoutesValidators;
+        protected readonly IBaseRepository<Route> _baseRepository;
+
+        public RouteRepository(SqlContext sqlContext, ICustomRoutesValidators customRoutesValidators, IBaseRepository<Route> baseRepository)
+        {
+            _sqlContext = sqlContext;
+            _customRoutesValidators = customRoutesValidators;
+            _baseRepository = baseRepository;
         }
 
-    }
+
+        public IList<RankedRouteDTO> CheckCheapestRoute(string origin, string destination)
+        {
+            string sql = GetQueries.GetRankedRoutesSql(origin, destination);
+
+            var result = _sqlContext.RankedRouteDTOs.FromSqlRaw(sql).ToList();
+
+            return result;
+        }
+
+        public void CreateRoute(Route route)
+        {
+            if (_customRoutesValidators.RouteExists(route))
+            {
+                new Exception("Essa rota já existe");
+            }
+            _baseRepository.Insert(route);
+        }
+
+     }
 }

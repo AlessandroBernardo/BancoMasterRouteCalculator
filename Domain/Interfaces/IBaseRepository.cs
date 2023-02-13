@@ -1,4 +1,6 @@
 ﻿using Domain.Entities;
+using Domain.Entities.DTOResults;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Interfaces
@@ -9,11 +11,10 @@ namespace Domain.Interfaces
 
         void Update(TEntity obj);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         IList<TEntity> Select();
 
-        TEntity Select(int id);
-      
+        TEntity Select(Guid id);        
     }
 }

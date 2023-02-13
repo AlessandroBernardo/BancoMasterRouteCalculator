@@ -6,6 +6,6 @@ namespace Domain.Entities
     {
         public string Origin { get; set; }
         public string Destination { get; set; }
-        public decimal Value { get; set; }
+        public decimal Price { get; set; }
     }
 }
