@@ -36,6 +36,7 @@ namespace App
 
             
             services.AddDbContext<SqlContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionDefault")));
+            services.AddDbContext<ContextInMemory>(options => options.UseInMemoryDatabase("BancoMasterBDInMemory"));
             services.AddAutoMapper(typeof(AutoMapperSetup));
             services.AddSwaggerGen(x =>
            {

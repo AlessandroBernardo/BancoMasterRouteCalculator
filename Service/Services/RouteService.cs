@@ -11,15 +11,18 @@ namespace Service.Services
     public class RouteService : IRouteService
     {
         private readonly IRouteRepository _routeRepository;
+        private readonly IInMemoryRouteRepository _inMemoryBaseRepository;
 
-        public RouteService(IRouteRepository routeRespository)
+        public RouteService(IRouteRepository routeRespository, IInMemoryRouteRepository inMemoryRouteRepository)
         {
             _routeRepository = routeRespository;
+            _inMemoryBaseRepository = inMemoryRouteRepository;
         }
 
         public IList<RankedRouteDTO> CheckCheapestRoute(string origin, string destination)
         {
             return _routeRepository.CheckCheapestRoute(origin, destination);
         }
+
     }
 }
