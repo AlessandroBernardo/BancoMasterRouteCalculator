@@ -22,7 +22,7 @@ namespace Service.Tests
         public void CheckCheapestRoute_ShouldCallCheckCheapestRouteOnRepository()
         {
             // Arrange
-            var origin = "GRU";
+            var origin = "SDF";
             var destination = "CDG";
             var expected = new List<RankedRouteDTO>();
             _routeRepositoryMock.Setup(x => x.CheckCheapestRoute(origin, destination))
