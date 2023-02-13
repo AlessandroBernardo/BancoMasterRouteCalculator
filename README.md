@@ -1,34 +1,39 @@
-# BancoMasterRouteCalculator
-Projeto para teste Banco Master => Criar api que calcule a rota mais economica.
+<h1>Calcular a rota mais econômica entre dois pontos</h1>
 
-ESTE É UM PROJETO TESTE PARA O BANCO MASTER, QUE TEM COMO OBJETIVO CRIAR UM CRUD DE ROTAS (PONTO A -> PONTO B) COM UM VALOR.
-O DESAFIO É ENTRE AS ROTAS EXISTENTES CALCULAR UMA ROTA MAIS ECONOMICA MESMO QUE AUMENTE OS PONTOS DAS ROTAS E DEVOLVER A MELHOR.
-PS: FUGI UM POUCO DA PROPOSTA E VOLTEI UMA LISTA DE ROTAS POSSIVEIS RANKEADAS PELO MELHOR VALOR ENTRE ELAS =).
-
-O PROJETO ESTÁ EM .NET CORE 3.1 COM UMA SIMPLIFICAÇÃO DA ABORDAGEM DE DESENVOLVIMENTO DE SOFTWARE "DDD" (DOMAIN-Driven Design).
-ACESSO DE DADOS COM ORM (EF CORE 3.1), VALIDAÇÕES COM FLUENT VALIDATION, INJEÇÃO DE DEPENDENCIA, AUTOMAPPER, CODE-FIRST MIGRATION.
-
-AO RODAR O PROJETO A INTERFACE ESTÁ NO SWAGGER.
-
-ALGUNS DETALHES PARA RODAR O PROJETO:
-
-0 - AO CLONAR O SOLUTION O VISUAL STUDIO NORMALMENTE TENDE A BAIXAR AS DEPENDENCIAS DE CADA PROJETO.
-1 - O BANCO DE DADOS É SQL E ESTÁ COM EF CORE E COM MIGRATIONS.
-2 - PARA CRIAR O BANCO DADOS NO SEU AMBIENTE, É PRECISO ALTERAR A STRING DE CONEXÃO NO ARQUIVO: "appsettings.json" NA CAMADA de Application
-3 - DEPOIS DE ALTERADA A CONEXÃO, É PRECISO RODAR OS COMANDOS DO MIGRATIONS
-  3.1 - AQUI PODE VARIAR DE CONSOLE (no visual studio, o comando control + aspas abrirá O SEU TERMINAL) OU USE ALGUM DE SUA PREFERENCIAS. 
-  3.1.1 SE NO BASH/PowerShell: cd Data (para ir para camada de dados) dotnet ef migrations enable | dotnet ef migrations add InitialCreate | dotnet ef database update
-  3.1.2 SE OUTRO, VERIFICAR.
-4 - DANDO CERTO TODOS OS COMANDOS, O BANCO TERÁ SIDO CRIADO E O PROJETO PODE SER EXECUTADO PELO IIS OU PELO AMBIENTE DE DEPURAÇÃO DO VISUAL STUDIO.
-5 - A INTERFACE SWAGGER MOSTRARÁ OS ENDPOINTS CRUD DE ROTAS E UM ENDPOINT COM A SOLUÇÃO PROPOSTA PARA O DESAFIO, BASTANDO INFORMAR DOIS PONTOS ORIGEM E DESTINO.
-  5.1 - CLICAR NO ENDPOINT E DEPOIS EM TRY IT OUT E INFORMAR OS PARAMETROS.
-
-6 - DA SOLUÇÃO E SEUS ASPECTOS TÉCNICOS
-  A - CAMADA DE TESTES (0 - Tests) CONTEM UM TESTE SIMPLES COM XUNITE QUE VERIFICA SE O RETORNO DO MOCK É O MESMO DA IMPLEMENTAÇÃO DO SERVIÇO QUE CALCULA A MELHOR ROTA.
-  B - AUTOMAPPER DOS OBJETOS QUE VEM DA WEB PARA O BANCO E O QUE VEM DO BANCO PARA QUEM SOLICITOU.
-  C - INJEÇÃO DE DEPENDENCIA CONFIGURADAS NO CONTAINER DENTRO DA CLASSE STARTUP.
-  D - VALIDAÇÕES SIMPLES PARA INSERT E UPDATE DE DADOS NA CAMADA DE SERVIÇO USANDO FLUENT VALIDATION.
-  E - UMA VALIDAÇÃO SEM BIBLIOTECA PARA VERIFICAR SE A ROTA A SER INSERIDA JÁ EXISTE.
-  F - CRIANDO UM ENUM NA CAMADA DE DOMINIO QUE CONTEM ALGUMAS ROTAS ALÉM DAS QUE JÁ EXISTIAM QUE SÓ PERMITEM NOVOS INSERTS SE EXISTIREM NESTE ENUM (VALIDAÇÃO PELO FLUENT VALIDATION). 
-  G - NA CAMADA DE DATA CRIEI UMA PASTA PARA COLOCAR AS QUERIES, NELA ESTÁ A QUERY QUE É PASSADA PELO ENTITY PARA TRAZER AS ROTAS RANKEADAS.
-  H - A CAMADA CROSSCUTTING ESTÁ VAZIA, MAS SERVERIA PARA IMPLEMENTAÇÕES QUE POSSAM SER USADAS POR TODAS AS OUTRAS CAMADAS, COMO LOG E ETC.
+<div>
+  <p>Este projeto é um teste para o Banco Master, que tem como objetivo criar uma API de rotas (ponto A -> ponto B) com um valor associado. O desafio é calcular a rota mais econômica, mesmo que isso aumente o número de pontos das rotas, e retornar a melhor rota.</p>
+  <p><strong>Tecnologias usadas</strong></p>
+  <ul>
+    <li>.NET Core 3.1</li>
+    <li>DDD (Domain-Driven Design)</li>
+    <li>ORM (EF Core 3.1)</li>
+    <li>Fluent Validation</li>
+    <li>Injeção de Dependência</li>
+    <li>Automapper</li>
+    <li>Code-First Migration</li>
+  </ul>
+  <p><strong>Como executar o projeto</strong></p>
+  <ol>
+    <li>Clone o projeto</li>
+    <li>Abra o projeto no Visual Studio e espere que todas as dependências sejam baixadas</li>
+    <li>Altere a string de conexão no arquivo "appsettings.json" na camada de Application</li>
+    <li>Rode os comandos de migrations (pode ser feito no terminal do Visual Studio ou em outro terminal de sua preferência)</li>
+<li>Rode os comandos de migrations (pode ser feito no terminal do Visual Studio ou em outro terminal de sua preferência)
+    <ul>
+      <li>cd Data</li>
+      <li>dotnet ef migrations enable</li>
+      <li>dotnet ef migrations add InitialCreate</li>
+      <li>dotnet ef database update InitialCreate</li>
+    </ul>
+    <li>Depois de rodar os comandos de migrações, o banco de dados será criado e o projeto pode ser executado pelo IIS ou pelo ambiente de depuração do Visual Studio</li>
+    <li>A interface Swagger mostrará os endpoints CRUD de rotas e um endpoint para calcular a rota econômica, basta informar dois pontos de origem e destino</li>
+  </ol>
+<h3>Estrutura da solução</h3>
+<ul>
+  <li><b>Camada de testes:</b> contém um teste simples que verifica se o retorno do mock é o mesmo da implementação do serviço de cálculo de rota.</li>
+  <li><b>Automapper:</b> permite mapear objetos que vem da web para o banco e vice-versa.</li>
+  <li><b>Injeção de dependência:</b> as dependências são configuradas no container na classe Startup.</li>
+  <li><b>Validações:</b> validações simples para inserir e atualizar dados na camada de serviço usando Fluent Validation. Há também uma validação sem biblioteca para verificar se a rota já existe.</li>
+  <li><b>Enum:</b> foi criado um enum na camada de domínio que contém algumas rotas, além das que já existem, e só permite novos inserts se estiverem neste enum (validado pelo Fluent Validation).</li>
+  <li><b>Camada de dados:</b> na camada de dados há uma pasta com as queries, incluindo a query que é passada pelo Entity para trazer as rotas rankeadas pelo melhor valor.</li>
+</ul>
