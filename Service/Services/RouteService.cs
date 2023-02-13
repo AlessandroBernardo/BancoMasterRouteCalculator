@@ -23,26 +23,3 @@ namespace Service.Services
         }
     }
 }
-
-
-//public Route CreateRoute(Route route)
-//{
-//    try
-//    {
-
-//        //var _routes = Get();
-//        CustomValidator customValidator = new CustomValidator();
-//        IReadOnlyList<Route> _routes = (IReadOnlyList<Route>)Get();
-//        if (customValidator.RouteExists(_routes, route))
-//        {
-//            throw new Exception("Já existe essa rota");
-//        }
-//        Add<RouteValidator>(route);
-//        return route;
-//    }
-//    catch (Exception ex)
-//    {
-//        throw new Exception(ex.Message);
-//    }
-
-//}

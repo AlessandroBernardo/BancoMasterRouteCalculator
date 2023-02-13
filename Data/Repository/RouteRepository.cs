@@ -25,7 +25,6 @@ namespace Data.Repository
             _baseRepository = baseRepository;
         }
 
-
         public IList<RankedRouteDTO> CheckCheapestRoute(string origin, string destination)
         {
             string sql = GetQueries.GetRankedRoutesSql(origin, destination);
@@ -33,16 +32,6 @@ namespace Data.Repository
             var result = _sqlContext.RankedRouteDTOs.FromSqlRaw(sql).ToList();
 
             return result;
-        }
-
-        public void CreateRoute(Route route)
-        {
-            if (_customRoutesValidators.RouteExists(route))
-            {
-                new Exception("Essa rota já existe");
-            }
-            _baseRepository.Insert(route);
-        }
-
+        }       
      }
 }

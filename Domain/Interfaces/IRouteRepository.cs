@@ -8,9 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IRouteRepository
     {
-
         IList<RankedRouteDTO> CheckCheapestRoute(string origin, string destination);
-
-        //void CreateRoute(Route route);
     }
 }
