@@ -9,11 +9,13 @@ namespace Service.Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : BaseEntity 
     {
-        private readonly IBaseRepository<TEntity> _baseRepository;        
+        private readonly IBaseRepository<TEntity> _baseRepository;
+        private readonly IInMemoryBaseRepository<TEntity> _inMemoryBaseRepository;
 
-        public BaseService(IBaseRepository<TEntity> baseRepository)
+        public BaseService(IBaseRepository<TEntity> baseRepository, IInMemoryBaseRepository<TEntity> inMemoryBaseRepository)
         {
-            _baseRepository = baseRepository;                        
+            _baseRepository = baseRepository;
+            _inMemoryBaseRepository = inMemoryBaseRepository;
         }  
 
         private void Validate(TEntity obj, AbstractValidator<TEntity> validator)

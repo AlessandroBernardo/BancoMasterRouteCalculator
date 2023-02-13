@@ -1,12 +1,7 @@
-﻿using Data.Repository;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Enum;
-using Domain.Interfaces;
 using FluentValidation;
-using Microsoft.AspNetCore.Components;
-using Service.Services;
 using System;
-using System.Collections.Generic;
 
 namespace Service.Validators
 {
