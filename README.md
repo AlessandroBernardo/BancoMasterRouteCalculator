@@ -36,3 +36,5 @@
   <li><b>Enum:</b> foi criado um enum na camada de domínio que contém algumas rotas, além das que já existem, e só permite novos inserts se estiverem neste enum (validado pelo Fluent Validation).</li>
   <li><b>Camada de dados:</b> na camada de dados há uma pasta com as queries, incluindo a query que é passada pelo Entity para trazer as rotas rankeadas pelo melhor valor.</li>
 </ul>
+
+<p>Foi criada uma branch nova para implementação de um banco de dados em memoria, mas ainda não está concluído, apenas para amostragem do uso do git</p>
