@@ -16,9 +16,9 @@ namespace Data.Repository
 
         protected readonly SqlContext _sqlContext;
         protected readonly ICustomRoutesValidators _customRoutesValidators;
-        protected readonly IBaseRepository<Route> _baseRepository;
+        protected readonly IInMemoryBaseRepository<Route> _baseRepository;
 
-        public RouteRepository(SqlContext sqlContext, ICustomRoutesValidators customRoutesValidators, IBaseRepository<Route> baseRepository)
+        public RouteRepository(SqlContext sqlContext, ICustomRoutesValidators customRoutesValidators, IInMemoryBaseRepository<Route> baseRepository)
         {
             _sqlContext = sqlContext;
             _customRoutesValidators = customRoutesValidators;
