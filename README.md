@@ -16,8 +16,7 @@
   <ol>
     <li>Clone o projeto</li>
     <li>Abra o projeto no Visual Studio e espere que todas as dependências sejam baixadas</li>
-    <li>Altere a string de conexão no arquivo "appsettings.json" na camada de Application</li>
-    <li>Rode os comandos de migrations (pode ser feito no terminal do Visual Studio ou em outro terminal de sua preferência)</li>
+    <li>Altere a string de conexão no arquivo "appsettings.json" na camada de Application</li>    
 <li>Rode os comandos de migrations (pode ser feito no terminal do Visual Studio ou em outro terminal de sua preferência)
     <ul>
       <li>cd Data</li>
